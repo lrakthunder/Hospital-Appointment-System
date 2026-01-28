@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-header">
+        {{ editingFeedbackId ? 'Edit Feedback' : 'Submit Feedback' }}
+      </div>
+
+      <div class="alert alert-success" *ngIf="success">{{ success }}</div>
+      <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+      <div class="alert alert-info" *ngIf="todayFeedback && !editingFeedbackId">
+        You have already submitted feedback today. You can edit it within 24 hours.
+      </div>
+
+      <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="rating">Rating</label>
+          <select id="rating" class="form-control" formControlName="rating">
+            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+            <option value="4">⭐⭐⭐⭐ Good</option>
+            <option value="3">⭐⭐⭐ Average</option>
+            <option value="2">⭐⭐ Poor</option>
+            <option value="1">⭐ Very Poor</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="department">Department (Optional)</label>
+          <select id="department" class="form-control" formControlName="department">
+            <option value="">Select Department</option>
+            <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="comment">Your Feedback</label>
+          <textarea id="comment" class="form-control" formControlName="comment" 
+                    rows="5" placeholder="Share your experience with us"></textarea>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary" 
+                  [disabled]="loading || feedbackForm.invalid || (todayFeedback && !editingFeedbackId)">
+            <span *ngIf="loading">{{ editingFeedbackId ? 'Updating...' : 'Submitting...' }}</span>
+            <span *ngIf="!loading">{{ editingFeedbackId ? 'Update Feedback' : 'Submit Feedback' }}</span>
+          </button>
+          <button type="button" class="btn btn-secondary" *ngIf="editingFeedbackId" 
+                  (click)="cancelEdit()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Your Previous Feedback</div>
+
+      <div *ngIf="myFeedback.length === 0" class="alert alert-info">
+        You haven't submitted any feedback yet.
+      </div>
+
+      <div class="feedback-list" *ngIf="myFeedback.length > 0">
+        <div class="feedback-item" *ngFor="let feedback of myFeedback">
+          <div class="feedback-rating">{{ getRatingStars(feedback.rating) }}</div>
+          <div class="feedback-comment">{{ feedback.comment }}</div>
+          <div class="feedback-meta">
+            <span *ngIf="feedback.department">{{ feedback.department }} • </span>
+            <span class="feedback-date">{{ feedback.created_at | date:'short' }}</span>
+            <button class="btn btn-sm btn-primary" *ngIf="canEdit(feedback)" 
+                    (click)="editFeedback(feedback)" style="margin-left: 10px;">
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

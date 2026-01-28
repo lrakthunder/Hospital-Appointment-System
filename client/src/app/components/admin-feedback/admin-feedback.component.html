@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>User Feedback & Reviews</span>
+        <div class="filter-group">
+          <label for="ratingFilter">Filter by Rating:</label>
+          <select id="ratingFilter" class="form-control" [(ngModel)]="ratingFilter" (change)="filterByRating()">
+            <option value="">All Ratings</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="spinner"></div>
+
+    <div *ngIf="!loading && feedbackList.length === 0" class="alert alert-info">
+      No feedback found.
+    </div>
+
+    <table class="table" *ngIf="!loading && feedbackList.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Rating</th>
+          <th>Department</th>
+          <th>Comment</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let feedback of feedbackList" [class.text-muted]="feedback.is_hidden">
+          <td>{{ feedback.id }}</td>
+          <td>{{ feedback.user?.name || 'N/A' }}</td>
+          <td>{{ getRatingStars(feedback.rating) }}</td>
+          <td>{{ feedback.department || 'General' }}</td>
+          <td>
+            <span *ngIf="!feedback.is_hidden">{{ feedback.comment }}</span>
+            <span *ngIf="feedback.is_hidden" class="text-muted fst-italic">[Hidden]</span>
+          </td>
+          <td>{{ feedback.created_at | date:'short' }}</td>
+          <td>
+            <span class="badge" [class.bg-success]="!feedback.is_hidden" [class.bg-secondary]="feedback.is_hidden">
+              {{ feedback.is_hidden ? 'Hidden' : 'Visible' }}
+            </span>
+          </td>
+          <td>
+            <button 
+              class="btn btn-sm" 
+              [class.btn-warning]="!feedback.is_hidden"
+              [class.btn-success]="feedback.is_hidden"
+              (click)="toggleVisibility(feedback)">
+              <i class="bi" [class.bi-eye-slash]="!feedback.is_hidden" [class.bi-eye]="feedback.is_hidden"></i>
+              {{ feedback.is_hidden ? 'Show' : 'Hide' }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

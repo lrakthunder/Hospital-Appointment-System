@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="calendar-header">
+        <button class="btn btn-outline" (click)="previousMonth()">← Previous</button>
+        <h3>{{ getMonthName() }}</h3>
+        <button class="btn btn-outline" (click)="nextMonth()">Next →</button>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="spinner"></div>
+
+    <div *ngIf="!loading" class="calendar-container">
+      <div class="calendar-grid">
+        <!-- Day headers -->
+        <div class="calendar-day-header">Sun</div>
+        <div class="calendar-day-header">Mon</div>
+        <div class="calendar-day-header">Tue</div>
+        <div class="calendar-day-header">Wed</div>
+        <div class="calendar-day-header">Thu</div>
+        <div class="calendar-day-header">Fri</div>
+        <div class="calendar-day-header">Sat</div>
+
+        <!-- Calendar days -->
+        <div *ngFor="let dayData of calendarDays" 
+             class="calendar-day"
+             [class.empty-day]="!dayData"
+             [class.today]="dayData && isToday(dayData.date)">
+          <div *ngIf="dayData" class="day-content">
+            <div class="day-number">{{ dayData.day }}</div>
+            <div class="day-stats-list" *ngIf="dayData.total > 0">
+              <div class="stat-line pending" *ngIf="dayData.pending > 0">
+                Pending: {{ dayData.pending }}
+              </div>
+              <div class="stat-line confirmed" *ngIf="dayData.confirmed > 0">
+                Confirmed: {{ dayData.confirmed }}
+              </div>
+              <div class="stat-line completed" *ngIf="dayData.completed > 0">
+                Completed: {{ dayData.completed }}
+              </div>
+              <div class="stat-line cancelled" *ngIf="dayData.cancelled > 0">
+                Cancelled: {{ dayData.cancelled }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="calendar-legend">
+      <h4>Status Legend:</h4>
+      <div class="legend-items">
+        <span class="legend-item"><span class="legend-color status-pending"></span> Pending</span>
+        <span class="legend-item"><span class="legend-color status-confirmed"></span> Confirmed</span>
+        <span class="legend-item"><span class="legend-color status-completed"></span> Completed</span>
+        <span class="legend-item"><span class="legend-color status-cancelled"></span> Cancelled</span>
+      </div>
+    </div>
+  </div>
+</div>

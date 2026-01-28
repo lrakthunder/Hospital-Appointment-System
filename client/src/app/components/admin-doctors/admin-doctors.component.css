@@ -1,0 +1,9 @@
+/* Admin Doctors Component Styles */
+.table th:first-child,
+.table td:first-child {
+  min-width: 180px;
+  width: 180px;
+}
+.table th {
+  text-align: center;
+}

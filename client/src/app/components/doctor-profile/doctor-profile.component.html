@@ -1,0 +1,87 @@
+<div class="container-fluid py-4">
+  <div class="card" *ngIf="!loading && doctor">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0"><i class="bi bi-person-badge"></i> {{ isOwnProfile ? 'My Profile' : 'Doctor Profile' }}</h4>
+      <div>
+        <button class="btn btn-secondary me-2" (click)="goBack()"><i class="bi bi-arrow-left"></i> Back</button>
+        <button class="btn btn-primary" (click)="toggleEdit()" *ngIf="isOwnProfile || isAdmin">
+          <i class="bi" [ngClass]="isEditing ? 'bi-x-circle' : 'bi-pencil'"></i> {{ isEditing ? 'Cancel' : 'Edit' }}
+        </button>
+        <button class="btn btn-success ms-2" (click)="saveProfile()" *ngIf="isEditing"><i class="bi bi-check-circle"></i> Save</button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <h5><i class="bi bi-person-circle"></i> Personal</h5>
+          <div class="mb-3"><label class="fw-bold">Name</label><input type="text" class="form-control" [(ngModel)]="profileForm.name" [disabled]="!isEditing"></div>
+          <div class="mb-3"><label class="fw-bold">Email</label><input type="email" class="form-control" [(ngModel)]="profileForm.email" [disabled]="!isEditing"></div>
+          <div class="mb-3"><label class="fw-bold">Phone</label><input type="tel" class="form-control" [(ngModel)]="profileForm.phone" [disabled]="!isEditing"></div>
+          <div class="mb-3"><label class="fw-bold">Gender</label><select class="form-select" [(ngModel)]="profileForm.gender" [disabled]="!isEditing"><option value="">Select Gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+          <div class="mb-3"><label class="fw-bold">Date of Birth</label><input type="date" class="form-control" [(ngModel)]="profileForm.date_of_birth" [disabled]="!isEditing"></div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+          <h5><i class="bi bi-briefcase"></i> Professional</h5>
+          <div class="mb-3"><label class="fw-bold">Department</label><select class="form-select" [(ngModel)]="profileForm.department" [disabled]="!isEditing"><option value="">Select Department</option><option *ngFor="let dept of departments" [value]="dept">{{dept}}</option></select></div>
+          <div class="mb-3"><label class="fw-bold">Specialization</label><input type="text" class="form-control" [(ngModel)]="profileForm.specialization" [disabled]="!isEditing"></div>
+          <div class="mb-3"><label class="fw-bold">License #</label><input type="text" class="form-control" [(ngModel)]="profileForm.license_number" [disabled]="!isEditing"></div>
+          <div class="mb-3"><label class="fw-bold">Experience (years)</label><input type="number" class="form-control" [(ngModel)]="profileForm.years_of_experience" [disabled]="!isEditing"></div>
+          <div class="mb-3"><label class="fw-bold">Fee ($)</label><input type="number" step="0.01" class="form-control" [(ngModel)]="profileForm.consultation_fee" [disabled]="!isEditing"></div>
+          <div class="mb-3" *ngIf="isAdmin && !isOwnProfile"><label class="fw-bold">Status</label><select class="form-select" [(ngModel)]="profileForm.status" [disabled]="!isEditing"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+          <div class="mb-3"><label><input type="checkbox" [(ngModel)]="profileForm.accepting_new_patients" [disabled]="!isEditing"> Accepting New Patients</label></div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+          <h5><i class="bi bi-mortarboard"></i> Education</h5>
+          <div class="mb-3"><label class="fw-bold">Qualifications</label><input type="text" class="form-control" [(ngModel)]="profileForm.qualifications" [disabled]="!isEditing" placeholder="MD, MBBS, PhD"></div>
+          <div class="mb-3"><label class="fw-bold">Medical School</label><input type="text" class="form-control" [(ngModel)]="profileForm.medical_school" [disabled]="!isEditing"></div>
+          <div class="mb-3"><label class="fw-bold">Graduation Year</label><input type="number" class="form-control" [(ngModel)]="profileForm.graduation_year" [disabled]="!isEditing"></div>
+          <div class="mb-3"><label class="fw-bold">Education</label><textarea class="form-control" rows="2" [(ngModel)]="profileForm.education" [disabled]="!isEditing"></textarea></div>
+          <div class="mb-3"><label class="fw-bold">Certifications</label><textarea class="form-control" rows="2" [(ngModel)]="profileForm.certifications" [disabled]="!isEditing"></textarea></div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+          <h5><i class="bi bi-hospital"></i> Practice</h5>
+          <div class="mb-3"><label class="fw-bold">Office Address</label><input type="text" class="form-control" [(ngModel)]="profileForm.office_address" [disabled]="!isEditing"></div>
+          <div class="row"><div class="col-6 mb-3"><label class="fw-bold">City</label><input type="text" class="form-control" [(ngModel)]="profileForm.city" [disabled]="!isEditing"></div><div class="col-6 mb-3"><label class="fw-bold">State</label><input type="text" class="form-control" [(ngModel)]="profileForm.state" [disabled]="!isEditing"></div></div>
+          <div class="mb-3"><label class="fw-bold">ZIP</label><input type="text" class="form-control" [(ngModel)]="profileForm.zip_code" [disabled]="!isEditing"></div>
+          <div class="mb-3"><label class="fw-bold">Available Days</label><input type="text" class="form-control" [(ngModel)]="profileForm.available_days" [disabled]="!isEditing"></div>
+          <div class="row"><div class="col-6 mb-3"><label class="fw-bold">Start</label><input type="time" class="form-control" [(ngModel)]="profileForm.available_time_start" [disabled]="!isEditing"></div><div class="col-6 mb-3"><label class="fw-bold">End</label><input type="time" class="form-control" [(ngModel)]="profileForm.available_time_end" [disabled]="!isEditing"></div></div>
+          <div class="mb-3"><label class="fw-bold">Languages</label><input type="text" class="form-control" [(ngModel)]="profileForm.languages_spoken" [disabled]="!isEditing"></div>
+        </div>
+
+        <div class="col-12 mb-4">
+          <h5><i class="bi bi-info-circle"></i> Additional</h5>
+          <div class="mb-3"><label class="fw-bold">Bio</label><textarea class="form-control" rows="3" [(ngModel)]="profileForm.bio" [disabled]="!isEditing"></textarea></div>
+          <div class="mb-3"><label class="fw-bold">Research Interests</label><textarea class="form-control" rows="2" [(ngModel)]="profileForm.research_interests" [disabled]="!isEditing"></textarea></div>
+          <div class="mb-3"><label class="fw-bold">Awards</label><textarea class="form-control" rows="2" [(ngModel)]="profileForm.awards_recognition" [disabled]="!isEditing"></textarea></div>
+        </div>
+
+        <div class="col-12 mb-4">
+          <h5><i class="bi bi-telephone-fill"></i> Emergency</h5>
+          <div class="row"><div class="col-md-6 mb-3"><label class="fw-bold">Contact Name</label><input type="text" class="form-control" [(ngModel)]="profileForm.emergency_contact" [disabled]="!isEditing"></div><div class="col-md-6 mb-3"><label class="fw-bold">Phone</label><input type="tel" class="form-control" [(ngModel)]="profileForm.emergency_phone" [disabled]="!isEditing"></div></div>
+        </div>
+
+        <div class="col-12" *ngIf="isEditing && isOwnProfile">
+          <div class="card bg-light">
+            <div class="card-header"><button class="btn btn-sm btn-outline-primary" (click)="showPasswordChange = !showPasswordChange"><i class="bi bi-key"></i> {{ showPasswordChange ? 'Hide' : 'Change Password' }}</button></div>
+            <div class="card-body" *ngIf="showPasswordChange">
+              <div class="row">
+                <div class="col-md-4 mb-3"><label class="fw-bold">Current Password</label><input type="password" class="form-control" [(ngModel)]="passwordForm.current_password"></div>
+                <div class="col-md-4 mb-3"><label class="fw-bold">New Password</label><input type="password" class="form-control" [(ngModel)]="passwordForm.new_password"></div>
+                <div class="col-md-4 mb-3"><label class="fw-bold">Confirm</label><input type="password" class="form-control" [(ngModel)]="passwordForm.new_password_confirmation"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center py-5" *ngIf="loading">
+    <div class="spinner-border"></div>
+    <p class="mt-3">Loading profile...</p>
+  </div>
+</div>

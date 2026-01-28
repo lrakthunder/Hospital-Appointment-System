@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">Book an Appointment</div>
+
+    <div class="alert alert-success" *ngIf="success">{{ success }}</div>
+    <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+
+    <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-2">
+        <div class="form-group">
+          <label for="patient_name">Patient Name</label>
+          <input type="text" id="patient_name" class="form-control" formControlName="patient_name">
+        </div>
+
+        <div class="form-group">
+          <label for="patient_email">Email</label>
+          <input type="email" id="patient_email" class="form-control" formControlName="patient_email">
+        </div>
+
+        <div class="form-group">
+          <label for="patient_phone">Phone Number</label>
+          <input type="tel" id="patient_phone" class="form-control" formControlName="patient_phone">
+        </div>
+
+        <div class="form-group">
+          <label for="department">Department</label>
+          <select id="department" class="form-control" formControlName="department">
+            <option value="">Select Department</option>
+            <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="doctor">Preferred Doctor (Optional)</label>
+          <select id="doctor" class="form-control" formControlName="doctor" 
+                  [disabled]="!availableDoctors.length">
+            <option value="">Select Doctor</option>
+            <option *ngFor="let doc of availableDoctors" [value]="doc.name">{{ doc.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="appointment_date">Appointment Date</label>
+          <input type="date" id="appointment_date" class="form-control" 
+                 formControlName="appointment_date" [min]="getMinDate()">
+        </div>
+
+        <div class="form-group">
+          <label for="appointment_time">Appointment Time</label>
+          <input type="time" id="appointment_time" class="form-control" 
+                 formControlName="appointment_time" min="08:00" max="18:00">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="reason">Reason for Visit</label>
+        <textarea id="reason" class="form-control" formControlName="reason" 
+                  rows="4" placeholder="Describe your symptoms or reason for visit"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="loading || appointmentForm.invalid">
+          <span *ngIf="loading">Booking...</span>
+          <span *ngIf="!loading">Book Appointment</span>
+        </button>
+        <button type="button" class="btn btn-outline" routerLink="/dashboard/user">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

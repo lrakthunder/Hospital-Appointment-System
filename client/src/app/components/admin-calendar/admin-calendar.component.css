@@ -1,0 +1,170 @@
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.calendar-header h3 {
+  margin: 0;
+}
+
+.calendar-container {
+  padding: 1rem 0;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background-color: #e5e7eb;
+  border: 1px solid #e5e7eb;
+}
+
+.calendar-day-header {
+  background-color: #f3f4f6;
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: 600;
+  color: #374151;
+}
+
+.calendar-day {
+  background-color: white;
+  min-height: 120px;
+  padding: 0.5rem;
+}
+
+.calendar-day.today {
+  border: 2px solid #3b82f6;
+}
+
+.empty-day {
+  background-color: #f9fafb;
+}
+
+.day-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.day-number {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.day-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  font-size: 0.75rem;
+}
+
+.stat-line {
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+}
+
+.stat-line.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.stat-line.confirmed {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.stat-line.completed {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.stat-line.cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.day-appointments {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.appointment-pill {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.status-pending {
+  background-color: #f59e0b;
+}
+
+.status-confirmed {
+  background-color: #10b981;
+}
+
+.status-completed {
+  background-color: #3b82f6;
+}
+
+.status-cancelled {
+  background-color: #ef4444;
+}
+
+.calendar-legend {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 8px;
+}
+
+.calendar-legend h4 {
+  margin: 0 0 1rem 0;
+}
+
+.legend-items {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .calendar-grid {
+    font-size: 0.875rem;
+  }
+
+  .calendar-day {
+    min-height: 80px;
+    padding: 0.25rem;
+  }
+
+  .appointment-pill {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.3rem;
+  }
+}

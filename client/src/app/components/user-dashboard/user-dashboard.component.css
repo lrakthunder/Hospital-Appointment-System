@@ -1,0 +1,123 @@
+.user-dashboard {
+  position: relative;
+}
+
+.hero-section {
+  position: relative;
+  height: 350px;
+  background-image: url('/assets/images/dashboard-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(115, 147, 179, 0.9) 0%, rgba(115, 147, 179, 0.7) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero-overlay h1 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1rem;
+}
+
+.hero-overlay p {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-size: 1.2rem;
+}
+
+.floating-book-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, #7393b3 0%, #5a7a9a 100%);
+  color: white;
+  border-radius: 50px;
+  padding: 15px 25px;
+  box-shadow: 0 4px 15px rgba(115, 147, 179, 0.4);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  animation: pulse 2s infinite;
+}
+
+.floating-book-btn:hover {
+  background: linear-gradient(135deg, #5a7a9a 0%, #7393b3 100%);
+  box-shadow: 0 6px 20px rgba(115, 147, 179, 0.6);
+  transform: translateY(-3px);
+  color: white;
+}
+
+.floating-book-btn i {
+  font-size: 1.5rem;
+}
+
+.floating-book-btn .btn-text {
+  font-size: 1rem;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(115, 147, 179, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(115, 147, 179, 0.7);
+  }
+}
+
+.quick-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 250px;
+  }
+
+  .hero-overlay h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-overlay p {
+    font-size: 1rem;
+  }
+
+  .floating-book-btn {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+  }
+
+  .floating-book-btn .btn-text {
+    display: none;
+  }
+
+  .floating-book-btn i {
+    font-size: 1.8rem;
+  }
+
+  .quick-actions {
+    flex-direction: column;
+  }
+  
+  .quick-actions .btn {
+    width: 100%;
+  }
+}

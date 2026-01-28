@@ -1,0 +1,14 @@
+.filter-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.filter-group label {
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.filter-group .form-control {
+  width: 200px;
+}

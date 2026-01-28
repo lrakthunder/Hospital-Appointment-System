@@ -1,0 +1,185 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #a8b9d1 0%, #c1d3e8 50%, #dae5f2 100%);
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2rem;
+  padding-top: 4rem;
+}
+
+/* Left Section - Branding */
+.left-section {
+  color: #4a5f7f;
+  max-width: 450px;
+}
+
+.logo-large {
+  max-width: 280px;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.welcome-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.welcome-text {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+/* Right Section - Login Card */
+.right-section {
+  max-width: 480px;
+}
+
+.login-box {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  padding: 3rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+.login-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.form-control:focus {
+  border-color: #7393b3;
+  box-shadow: 0 0 0 4px rgba(115, 147, 179, 0.15);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eaa 0%, #7393b3 100%);
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 12px;
+  padding: 0.75rem;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5a7a99 0%, #667eaa 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(115, 147, 179, 0.4);
+}
+
+.btn-primary:disabled {
+  background: #9ca3af;
+  transform: none;
+}
+
+.alert-info {
+  background-color: #e0f2fe;
+  border: 1px solid #7dd3fc;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+/* Mobile Branding */
+.mobile-branding {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo-mobile {
+  max-width: 180px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.welcome-title-mobile {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #4a5f7f;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-text-mobile {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 576px) {
+  .login-box {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+  }
+
+  .welcome-title-mobile {
+    font-size: 1.5rem;
+  }
+
+  .welcome-text-mobile {
+    font-size: 0.875rem;
+  }
+}
+
+.login-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+.demo-credentials {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #e8ecf1;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.demo-credentials p {
+  margin: 0.25rem 0;
+}
+
+.invalid-feedback {
+  color: var(--danger-color);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+.is-invalid {
+  border-color: var(--danger-color) !important;
+}
+
+.is-invalid ~ .invalid-feedback {
+  display: block;
+}

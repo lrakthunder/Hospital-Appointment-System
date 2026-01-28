@@ -1,0 +1,124 @@
+/* Doctor Dashboard Styles */
+.doctor-portal {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+/* Logo in navigation */
+.logo {
+  height: 30px;
+  max-width: 100px;
+  object-fit: contain;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Table header alignment */
+.table thead th {
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.table {
+  table-layout: auto;
+  width: 100%;
+}
+
+/* Sortable table headers */
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.sortable:hover {
+  background-color: #e9ecef !important;
+}
+
+.sortable i {
+  font-size: 0.8rem;
+  margin-left: 0.25rem;
+  opacity: 0.6;
+}
+
+/* Note preview styling */
+.note-preview {
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.note-preview:hover {
+  background-color: #e7f3ff;
+  color: #0066cc !important;
+  transform: translateY(-1px);
+}
+
+.note-preview i.bi-eye {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.note-preview:hover i.bi-eye {
+  opacity: 1;
+}
+
+/* View note modal styling */
+.note-content {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.view-note-content {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.modal-content {
+  border-radius: 12px;
+}
+
+.modal-header.bg-primary {
+  border-radius: 12px 12px 0 0;
+}
+
+/* ngx-editor styling */
+::ng-deep .NgxEditor__Wrapper {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+
+::ng-deep .NgxEditor__MenuBar {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 8px;
+}
+
+::ng-deep .NgxEditor {
+  min-height: 250px;
+}
+
+::ng-deep .NgxEditor__Content {
+  padding: 12px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+::ng-deep .NgxEditor__Placeholder {
+  color: #6c757d;
+}

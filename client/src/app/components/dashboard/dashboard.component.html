@@ -1,0 +1,59 @@
+<div class="dashboard-wrapper">
+  <nav class="dashboard-nav">
+    <div class="nav-container">
+      <div class="nav-header">
+        <div class="logo">
+          <img src="/assets/images/logo.png" alt="Hospital Logo" class="logo-img me-2" onerror="this.style.display='none';">
+          Hospital System
+        </div>
+        <button class="hamburger" (click)="toggleMobileMenu()" [class.active]="mobileMenuOpen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <ul [class.mobile-menu-open]="mobileMenuOpen">
+        <li *ngIf="!authService.isAdmin">
+          <a routerLink="/dashboard/user" routerLinkActive="active" (click)="closeMobileMenu()">Dashboard</a>
+        </li>
+        <li *ngIf="!authService.isAdmin">
+          <a routerLink="/dashboard/book-appointment" routerLinkActive="active" (click)="closeMobileMenu()">Book Appointment</a>
+        </li>
+        <li *ngIf="!authService.isAdmin">
+          <a routerLink="/dashboard/appointment-history" routerLinkActive="active" (click)="closeMobileMenu()">History</a>
+        </li>
+        <li *ngIf="!authService.isAdmin">
+          <a routerLink="/dashboard/feedback" routerLinkActive="active" (click)="closeMobileMenu()">Feedback</a>
+        </li>
+        
+        <li *ngIf="authService.isAdmin">
+          <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">Dashboard</a>
+        </li>
+        <li *ngIf="authService.isAdmin">
+          <a routerLink="/admin/appointments" routerLinkActive="active" (click)="closeMobileMenu()">Appointments</a>
+        </li>
+        <li *ngIf="authService.isAdmin">
+          <a routerLink="/admin/doctors" routerLinkActive="active" (click)="closeMobileMenu()">Doctors</a>
+        </li>
+        <li *ngIf="authService.isAdmin">
+          <a routerLink="/admin/calendar" routerLinkActive="active" (click)="closeMobileMenu()">Calendar</a>
+        </li>
+        <li *ngIf="authService.isAdmin">
+          <a routerLink="/admin/feedback" routerLinkActive="active" (click)="closeMobileMenu()">Feedback</a>
+        </li>
+        <li *ngIf="authService.isAdmin">
+          <a routerLink="/admin/charts" routerLinkActive="active" (click)="closeMobileMenu()">Charts</a>
+        </li>
+        
+        <li class="user-menu">
+          <span>{{ currentUser?.name }}</span>
+          <button class="btn btn-danger" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="dashboard-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.feedback-item {
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.feedback-rating {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-comment {
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.feedback-date {
+  font-style: italic;
+}

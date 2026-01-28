@@ -1,0 +1,23 @@
+{
+  "name": "hospital-appointment-system",
+  "version": "1.0.0",
+  "description": "Hospital Appointment Booking System - Full Stack Application",
+  "scripts": {
+    "install:all": "composer install && cd client && npm install",
+    "backend": "php artisan serve --host 127.0.0.1 --port 8000 --public public_html",
+    "frontend": "cd client && npm start",
+    "migrate": "php artisan migrate",
+    "seed": "php artisan db:seed",
+    "migrate:fresh": "php artisan migrate:fresh --seed",
+    "setup": "npm run install:all && npm run migrate:fresh"
+  },
+  "keywords": [
+    "hospital",
+    "appointment",
+    "booking",
+    "laravel",
+    "angular"
+  ],
+  "author": "",
+  "license": "MIT"
+}

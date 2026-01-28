@@ -1,0 +1,83 @@
+<div class="container">
+  <h2>Analytics & Charts</h2>
+
+  <div *ngIf="loading" class="spinner"></div>
+
+  <div *ngIf="!loading && chartsData">
+    <!-- Appointments by Status -->
+    <div class="card">
+      <div class="card-header">Appointments by Status</div>
+      <div class="chart-container">
+        <div class="simple-bar-chart">
+          <div *ngFor="let item of chartsData.appointments_by_status" class="chart-bar-item">
+            <div class="chart-label">{{ item.status }}</div>
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" 
+                   [style.width.%]="getPercentage(item.count, getTotalAppointments())"
+                   [class]="'status-' + item.status">
+                <span class="chart-value">{{ item.count }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointments by Department -->
+    <div class="card">
+      <div class="card-header">Appointments by Department</div>
+      <div class="chart-container">
+        <div class="simple-bar-chart">
+          <div *ngFor="let item of chartsData.appointments_by_department" class="chart-bar-item">
+            <div class="chart-label">{{ item.department }}</div>
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar chart-bar-department" 
+                   [style.width.%]="getPercentage(item.count, getTotalAppointments())">
+                <span class="chart-value">{{ item.count }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointments by Month -->
+    <div class="card">
+      <div class="card-header">Appointments Trend (Last 6 Months)</div>
+      <div class="chart-container">
+        <div class="simple-bar-chart">
+          <div *ngFor="let item of chartsData.appointments_by_month" class="chart-bar-item">
+            <div class="chart-label">{{ item.month }}</div>
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar chart-bar-month" 
+                   [style.width.%]="getPercentage(item.count, getTotalAppointments())">
+                <span class="chart-value">{{ item.count }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback Ratings -->
+    <div class="card">
+      <div class="card-header">Feedback Ratings Distribution</div>
+      <div class="chart-container">
+        <div *ngIf="!chartsData.feedback_distribution || chartsData.feedback_distribution.length === 0" class="alert alert-info">
+          No feedback data available yet.
+        </div>
+        <div class="simple-bar-chart" *ngIf="chartsData.feedback_distribution && chartsData.feedback_distribution.length > 0">
+          <div *ngFor="let item of chartsData.feedback_distribution" class="chart-bar-item">
+            <div class="chart-label">{{ getRatingStars(item.rating) }}</div>
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar chart-bar-rating" 
+                   [style.width.%]="getPercentage(item.count, getTotalFeedback())">
+                <span class="chart-value">{{ item.count }} ({{ getPercentage(item.count, getTotalFeedback()) }}%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

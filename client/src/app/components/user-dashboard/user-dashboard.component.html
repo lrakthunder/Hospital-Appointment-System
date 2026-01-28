@@ -1,0 +1,105 @@
+<div class="user-dashboard">
+  <!-- Hero Section with Image -->
+  <div class="hero-section mb-4">
+    <div class="hero-overlay">
+      <div class="container">
+        <h1 class="display-4 text-white fw-bold">Welcome to Your Dashboard</h1>
+        <p class="lead text-white">Manage your appointments and health records with ease</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-3">
+    <div class="row g-2 mb-3">
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm stat-card">
+          <div class="card-body text-center py-2 px-2">
+            <i class="bi bi-calendar-check text-primary" style="font-size: 1.5rem;"></i>
+            <h5 class="mt-1 mb-0">{{ appointments.length }}</h5>
+            <p class="text-muted mb-0" style="font-size: 0.8rem;">Active Appointments</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm stat-card">
+          <div class="card-body text-center py-2 px-2">
+            <i class="bi bi-check-circle text-success" style="font-size: 1.5rem;"></i>
+            <h5 class="mt-1 mb-0">{{ (appointments | filter:'status':'confirmed').length }}</h5>
+            <p class="text-muted mb-0" style="font-size: 0.8rem;">Confirmed</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm stat-card">
+          <div class="card-body text-center py-2 px-2">
+            <i class="bi bi-hourglass-split text-warning" style="font-size: 1.5rem;"></i>
+            <h5 class="mt-1 mb-0">{{ (appointments | filter:'status':'pending').length }}</h5>
+            <p class="text-muted mb-0" style="font-size: 0.8rem;">Pending</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white border-bottom">
+        <h5 class="mb-0"><i class="bi bi-calendar3"></i> Your Upcoming Appointments</h5>
+      </div>
+      <div class="card-body">
+        <div *ngIf="loading" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        
+        <div *ngIf="!loading && appointments.length === 0" class="alert alert-info">
+          <i class="bi bi-info-circle"></i> You have no upcoming appointments. <a routerLink="/dashboard/book-appointment" class="alert-link">Book one now</a>
+        </div>      <div class="table-responsive" *ngIf="!loading && appointments.length > 0">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th><i class="bi bi-calendar-event"></i> Date Requested</th>
+              <th><i class="bi bi-clock"></i> Appointment Time&Date</th>
+              <th><i class="bi bi-hospital"></i> Department</th>
+              <th><i class="bi bi-person-badge"></i> Doctor</th>
+              <th><i class="bi bi-flag"></i> Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let appointment of appointments">
+              <td>{{ formatDate(appointment.created_at) }}</td>
+              <td>{{ formatDateTime(appointment.appointment_date, appointment.appointment_time) }}</td>
+              <td>{{ appointment.department }}</td>
+              <td>{{ appointment.doctor_name || 'Not assigned' }}</td>
+              <td><span class="badge" [class]="getStatusClass(appointment.status)">{{ appointment.status }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-4">
+    <div class="col-md-4">
+      <a routerLink="/dashboard/book-appointment" class="btn btn-primary w-100 py-3">
+        <i class="bi bi-plus-circle"></i> Book New Appointment
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a routerLink="/dashboard/appointment-history" class="btn btn-outline-secondary w-100 py-3">
+        <i class="bi bi-clock-history"></i> View History
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a routerLink="/dashboard/feedback" class="btn btn-success w-100 py-3">
+        <i class="bi bi-chat-left-text"></i> Give Feedback
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Book Now Button -->
+<a routerLink="/dashboard/book-appointment" class="floating-book-btn" title="Book Appointment">
+  <i class="bi bi-calendar-plus"></i>
+  <span class="btn-text">Book Now</span>
+</a>
+</div>

@@ -1,0 +1,80 @@
+<div class="login-container min-vh-100 d-flex">
+  <!-- Left Side - Branding -->
+  <div class="left-section d-none d-lg-flex flex-column justify-content-center align-items-start">
+    <img src="/assets/images/logo.png" alt="Hospital Logo" class="logo-large mb-4" onerror="this.style.display='none';">
+    <h1 class="welcome-title">Welcome!</h1>
+    <p class="welcome-text">Join us to manage your appointments. Appointments made gentle.</p>
+  </div>
+
+  <!-- Right Side - Register Card -->
+  <div class="right-section d-flex align-items-center justify-content-center">
+    <div class="login-box">
+      <!-- Mobile Branding - Visible only on small screens -->
+      <div class="mobile-branding text-center d-lg-none mb-4">
+        <img src="/assets/images/logo.png" alt="Hospital Logo" class="logo-mobile mb-3" onerror="this.style.display='none';">
+        <h1 class="welcome-title-mobile">Welcome!</h1>
+        <p class="welcome-text-mobile">Join us to manage your appointments. Appointments made gentle.</p>
+      </div>
+
+      <div class="text-center mb-4">
+        <h2 class="login-title">Create Account</h2>
+      </div>
+
+      <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" id="name" class="form-control" formControlName="name" 
+                 [class.is-invalid]="f['name'].touched && f['name'].errors">
+          <div class="invalid-feedback" *ngIf="f['name'].touched && f['name'].errors">
+            <div *ngIf="f['name'].errors['required']">Name is required</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" id="email" class="form-control" formControlName="email"
+                 [class.is-invalid]="f['email'].touched && f['email'].errors">
+          <div class="invalid-feedback" *ngIf="f['email'].touched && f['email'].errors">
+            <div *ngIf="f['email'].errors['required']">Email is required</div>
+            <div *ngIf="f['email'].errors['email']">Please enter a valid email</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" id="phone" class="form-control" formControlName="phone">
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" class="form-control" formControlName="password"
+                 [class.is-invalid]="f['password'].touched && f['password'].errors">
+          <div class="invalid-feedback" *ngIf="f['password'].touched && f['password'].errors">
+            <div *ngIf="f['password'].errors['required']">Password is required</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="password_confirmation" class="form-label">Confirm Password</label>
+          <input type="password" id="password_confirmation" class="form-control" 
+                 formControlName="password_confirmation"
+                 [class.is-invalid]="f['password_confirmation'].touched && registerForm.errors?.['mismatch']">
+          <div class="invalid-feedback" *ngIf="registerForm.errors?.['mismatch']">
+            Passwords do not match
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-2 mb-3" [disabled]="loading">
+          <span *ngIf="loading">Creating Account...</span>
+          <span *ngIf="!loading">Register</span>
+        </button>
+      </form>
+
+      <div class="text-center mt-3">
+        <p class="text-muted mb-0">Already have an account? <a routerLink="/login" class="text-primary text-decoration-none fw-bold">Sign in here</a></p>
+      </div>
+    </div>
+  </div>
+</div>

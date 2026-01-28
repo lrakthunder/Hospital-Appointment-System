@@ -1,0 +1,34 @@
+.section-title {
+  color: #7393b3;
+  border-bottom: 2px solid #7393b3;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.card-header {
+  background-color: #7393b3;
+  color: white;
+}
+
+h5 {
+  color: #7393b3;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+.fw-bold {
+  color: #495057;
+}

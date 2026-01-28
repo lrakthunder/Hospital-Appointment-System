@@ -1,0 +1,70 @@
+<div class="container">
+  <h2>Admin Dashboard</h2>
+
+  <div *ngIf="loading" class="spinner"></div>
+
+  <div *ngIf="!loading">
+    <div class="grid grid-4" style="margin: 2rem 0;">
+      <div class="stat-card">
+        <div class="stat-number">{{ stats.total_appointments || 0 }}</div>
+        <div class="stat-label">Total Appointments</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ stats.pending_appointments || 0 }}</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ stats.total_users || 0 }}</div>
+        <div class="stat-label">Total Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ stats.average_rating || 0 }} ⭐</div>
+        <div class="stat-label">Avg Rating</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Recent Appointments</div>
+
+      <table class="table" *ngIf="stats.recent_appointments && stats.recent_appointments.length > 0">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let appointment of stats.recent_appointments">
+            <td>{{ appointment.patient_name }}</td>
+            <td>{{ appointment.department }}</td>
+            <td>{{ appointment.appointment_date }}</td>
+            <td>{{ appointment.appointment_time }}</td>
+            <td><span [class]="getStatusClass(appointment.status)">{{ appointment.status }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="!stats.recent_appointments || stats.recent_appointments.length === 0" class="alert alert-info">
+        No recent appointments found.
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-top: 2rem;">
+      <a routerLink="/admin/appointments" class="stat-card" style="text-decoration: none; cursor: pointer;">
+        <div class="stat-number">{{ stats.confirmed_appointments || 0 }}</div>
+        <div class="stat-label">Confirmed Appointments</div>
+      </a>
+      <a routerLink="/admin/feedback" class="stat-card" style="text-decoration: none; cursor: pointer;">
+        <div class="stat-number">{{ stats.total_feedback || 0 }}</div>
+        <div class="stat-label">Total Feedback</div>
+      </a>
+      <a routerLink="/admin/charts" class="stat-card" style="text-decoration: none; cursor: pointer;">
+        <div class="stat-number">{{ stats.completed_appointments || 0 }}</div>
+        <div class="stat-label">Completed</div>
+      </a>
+    </div>
+  </div>
+</div>

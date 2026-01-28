@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Manage Appointments</span>
+        <div class="filter-group">
+          <label for="statusFilter">Filter by Status:</label>
+          <select id="statusFilter" class="form-control" [(ngModel)]="statusFilter" (change)="filterByStatus()">
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="spinner"></div>
+
+    <div *ngIf="!loading && appointments.length === 0" class="alert alert-info">
+      No appointments found.
+    </div>
+
+    <table class="table" *ngIf="!loading && appointments.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Patient</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Request Date</th>
+          <th>Appointment Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appointment of appointments">
+          <td>{{ appointment.id }}</td>
+          <td>{{ appointment.patient_name }}</td>
+          <td>{{ appointment.patient_email }}</td>
+          <td>{{ appointment.department }}</td>
+          <td>{{ appointment.created_at | date:'MM/dd/yyyy HH:mm:ss' }}</td>
+          <td>{{ appointment.appointment_time | date:'MM/dd/yyyy HH:mm:ss' }}</td>
+          <td><span [class]="getStatusClass(appointment.status)">{{ appointment.status }}</span></td>
+          <td>
+            <button class="btn btn-primary" (click)="openStatusModal(appointment)" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+              Update
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Update Appointment Status</h3>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Patient: {{ selectedAppointment?.patient_name }}</label>
+      </div>
+      <div class="form-group">
+        <label for="newStatus">Status</label>
+        <select id="newStatus" class="form-control" [(ngModel)]="newStatus">
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="adminNotes">Admin Notes</label>
+        <textarea id="adminNotes" class="form-control" [(ngModel)]="adminNotes" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" (click)="closeModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="updateStatus()">Update</button>
+    </div>
+  </div>
+</div>
