@@ -16,14 +16,16 @@ backend/Homestead.json
 backend/Homestead.yaml
 
 # Angular Frontend
-frontend/node_modules/
-frontend/dist/
-frontend/.angular/
-frontend/.vscode/
-frontend/*.log
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
+client/node_modules/
+client/dist/
+client/.angular/
+client/.vscode/
+client/*.log
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+public/build/
+public/app/
 
 # IDEs and editors
 .idea/
