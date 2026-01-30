@@ -35,7 +35,7 @@
           <select id="doctor" class="form-control" formControlName="doctor" 
                   [disabled]="!availableDoctors.length">
             <option value="">Select Doctor</option>
-            <option *ngFor="let doc of availableDoctors" [value]="doc.name">{{ doc.name }}</option>
+            <option *ngFor="let doc of availableDoctors" [value]="doc.id">{{ doc.name }}</option>
           </select>
         </div>
 

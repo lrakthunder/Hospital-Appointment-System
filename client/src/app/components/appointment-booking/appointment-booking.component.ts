@@ -92,7 +92,17 @@ export class AppointmentBookingComponent implements OnInit {
 
     this.loading = true;
 
-    this.appointmentService.createAppointment(this.appointmentForm.value).subscribe({
+    // Build payload: convert selected doctor (id) into doctor_id and remove the transient `doctor` field
+    const formValue = this.appointmentForm.value;
+    const payload: any = { ...formValue };
+    if (formValue.doctor) {
+      payload.doctor_id = Number(formValue.doctor);
+    } else {
+      payload.doctor_id = null;
+    }
+    delete payload.doctor;
+
+    this.appointmentService.createAppointment(payload).subscribe({
       next: (response) => {
         this.notificationService.success('Appointment booked successfully!');
         this.loading = false;

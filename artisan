@@ -13,11 +13,12 @@ $app = require_once __DIR__.'/bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 
+$input = new ArgvInput;
 $status = $kernel->handle(
-    $input = new ArgvInput,
+    $input,
     new ConsoleOutput
 );
 
 $kernel->terminate($input, $status);
 
-exit $status;
+exit($status);

@@ -15,7 +15,7 @@ class DoctorAppointmentController extends Controller
     {
         $doctor = $request->user();
         
-        $query = Appointment::where('doctor', $doctor->name)->with('attachments');
+        $query = Appointment::where('doctor_id', $doctor->id)->with('attachments');
 
         // Filter by status
         if ($request->has('status')) {
@@ -41,7 +41,7 @@ class DoctorAppointmentController extends Controller
     public function show(Request $request, $id)
     {
         $doctor = $request->user();
-        $appointment = Appointment::where('doctor', $doctor->name)
+        $appointment = Appointment::where('doctor_id', $doctor->id)
             ->findOrFail($id);
             
         return response()->json($appointment);
@@ -50,7 +50,7 @@ class DoctorAppointmentController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $doctor = $request->user();
-        $appointment = Appointment::where('doctor', $doctor->name)
+        $appointment = Appointment::where('doctor_id', $doctor->id)
             ->findOrFail($id);
 
         $validated = $request->validate([
@@ -77,7 +77,7 @@ class DoctorAppointmentController extends Controller
     public function decline(Request $request, $id)
     {
         $doctor = $request->user();
-        $appointment = Appointment::where('doctor', $doctor->name)
+        $appointment = Appointment::where('doctor_id', $doctor->id)
             ->findOrFail($id);
 
         $validated = $request->validate([
@@ -101,7 +101,7 @@ class DoctorAppointmentController extends Controller
     public function addNotes(Request $request, $id)
     {
         $doctor = $request->user();
-        $appointment = Appointment::where('doctor', $doctor->name)
+        $appointment = Appointment::where('doctor_id', $doctor->id)
             ->findOrFail($id);
 
         $validated = $request->validate([
@@ -120,19 +120,19 @@ class DoctorAppointmentController extends Controller
     {
         $doctor = $request->user();
 
-        $totalAppointments = Appointment::where('doctor', $doctor->name)->count();
-        $pending = Appointment::where('doctor', $doctor->name)->where('status', 'pending')->count();
-        $confirmed = Appointment::where('doctor', $doctor->name)->where('status', 'confirmed')->count();
-        $completed = Appointment::where('doctor', $doctor->name)->where('status', 'completed')->count();
-        $cancelled = Appointment::where('doctor', $doctor->name)->where('status', 'cancelled')->count();
+        $totalAppointments = Appointment::where('doctor_id', $doctor->id)->count();
+        $pending = Appointment::where('doctor_id', $doctor->id)->where('status', 'pending')->count();
+        $confirmed = Appointment::where('doctor_id', $doctor->id)->where('status', 'confirmed')->count();
+        $completed = Appointment::where('doctor_id', $doctor->id)->where('status', 'completed')->count();
+        $cancelled = Appointment::where('doctor_id', $doctor->id)->where('status', 'cancelled')->count();
 
-        $todayAppointments = Appointment::where('doctor', $doctor->name)
+        $todayAppointments = Appointment::where('doctor_id', $doctor->id)
             ->with('attachments')
             ->whereDate('appointment_date', today())
             ->orderBy('appointment_time')
             ->get();
 
-        $upcomingAppointments = Appointment::where('doctor', $doctor->name)
+        $upcomingAppointments = Appointment::where('doctor_id', $doctor->id)
             ->with('attachments')
             ->whereDate('appointment_date', '>', today())
             ->where('status', '!=', 'cancelled')
@@ -157,7 +157,7 @@ class DoctorAppointmentController extends Controller
         try {
             $emailData = [
                 'patient_name' => $appointment->patient_name,
-                'doctor_name' => $appointment->doctor,
+                'doctor_name' => ($appointment->doctor?->name ?? $appointment->doctor_name),
                 'appointment_date' => $appointment->appointment_date,
                 'appointment_time' => $appointment->appointment_time,
                 'department' => $appointment->department,
@@ -186,7 +186,7 @@ class DoctorAppointmentController extends Controller
         try {
             $emailData = [
                 'patient_name' => $appointment->patient_name,
-                'doctor_name' => $appointment->doctor,
+                'doctor_name' => ($appointment->doctor?->name ?? $appointment->doctor_name),
                 'appointment_date' => $appointment->appointment_date,
                 'appointment_time' => $appointment->appointment_time,
                 'department' => $appointment->department,
@@ -223,7 +223,7 @@ class DoctorAppointmentController extends Controller
         
         // Get all appointments for this patient with this doctor
         $appointments = Appointment::where('user_id', $userId)
-            ->where('doctor', $doctor->name)
+            ->where('doctor_id', $doctor->id)
             ->orderBy('appointment_date', 'desc')
             ->get();
         
@@ -240,7 +240,7 @@ class DoctorAppointmentController extends Controller
         $doctor = $request->user();
         
         // Verify appointment belongs to this doctor
-        $appointment = Appointment::where('doctor', $doctor->name)->findOrFail($id);
+        $appointment = Appointment::where('doctor_id', $doctor->id)->findOrFail($id);
         
         try {
             $request->validate([
@@ -286,7 +286,7 @@ class DoctorAppointmentController extends Controller
         $doctor = $request->user();
         
         // Verify appointment belongs to this doctor
-        $appointment = Appointment::where('doctor', $doctor->name)->findOrFail($appointmentId);
+        $appointment = Appointment::where('doctor_id', $doctor->id)->findOrFail($appointmentId);
         
         $attachment = AppointmentAttachment::where('appointment_id', $appointment->id)
             ->findOrFail($attachmentId);
@@ -299,7 +299,7 @@ class DoctorAppointmentController extends Controller
         $doctor = $request->user();
         
         // Verify appointment belongs to this doctor
-        $appointment = Appointment::where('doctor', $doctor->name)->findOrFail($appointmentId);
+        $appointment = Appointment::where('doctor_id', $doctor->id)->findOrFail($appointmentId);
         
         $attachment = AppointmentAttachment::where('appointment_id', $appointment->id)
             ->findOrFail($attachmentId);

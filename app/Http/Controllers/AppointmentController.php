@@ -22,14 +22,14 @@ class AppointmentController extends Controller
             'appointment_date' => 'required|date|after_or_equal:today',
             'appointment_time' => 'required',
             'department' => 'required|string|max:255',
-            'doctor' => 'nullable|string|max:255',
+            'doctor' => 'nullable|integer|exists:doctors,id',
             'reason' => 'nullable|string',
         ]);
 
-        // Map 'doctor' to 'doctor_name' for database storage
+        // Map 'doctor' (id) to 'doctor_id' for database storage
         $appointmentData = $validated;
         if (isset($validated['doctor'])) {
-            $appointmentData['doctor_name'] = $validated['doctor'];
+            $appointmentData['doctor_id'] = $validated['doctor'];
             unset($appointmentData['doctor']);
         }
 
@@ -37,12 +37,13 @@ class AppointmentController extends Controller
         if (!empty($validated['doctor'])) {
             $existingAppointment = $request->user()->appointments()
                 ->whereDate('appointment_date', $validated['appointment_date'])
-                ->where('doctor_name', $validated['doctor'])
+                ->where('doctor_id', $validated['doctor'])
                 ->first();
 
             if ($existingAppointment) {
+                $doctorName = \App\Models\Doctor::find($validated['doctor'])->name ?? 'the selected doctor';
                 return response()->json([
-                    'message' => 'You already have an appointment with ' . $validated['doctor'] . ' on this date.'
+                    'message' => 'You already have an appointment with ' . $doctorName . ' on this date.'
                 ], 422);
             }
         }
@@ -72,9 +73,15 @@ class AppointmentController extends Controller
             'appointment_date' => 'sometimes|required|date|after_or_equal:today',
             'appointment_time' => 'sometimes|required',
             'department' => 'sometimes|required|string|max:255',
-            'doctor' => 'nullable|string|max:255',
+            'doctor' => 'nullable|integer|exists:doctors,id',
             'reason' => 'nullable|string',
         ]);
+
+        // If doctor id provided, map to doctor_id field
+        if (isset($validated['doctor'])) {
+            $validated['doctor_id'] = $validated['doctor'];
+            unset($validated['doctor']);
+        }
 
         $appointment->update($validated);
 

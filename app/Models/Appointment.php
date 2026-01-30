@@ -14,6 +14,7 @@ class Appointment extends Model
         'patient_name',
         'patient_email',
         'patient_phone',
+        'doctor_id',
         'doctor_name',
         'appointment_date',
         'appointment_time',
@@ -44,5 +45,10 @@ class Appointment extends Model
     public function attachments()
     {
         return $this->hasMany(AppointmentAttachment::class);
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class, 'doctor_id');
     }
 }

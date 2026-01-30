@@ -69,7 +69,7 @@
               <td>{{ formatDate(appointment.created_at) }}</td>
               <td>{{ formatDateTime(appointment.appointment_date, appointment.appointment_time) }}</td>
               <td>{{ appointment.department }}</td>
-              <td>{{ appointment.doctor_name || 'Not assigned' }}</td>
+              <td>{{ appointment.doctor?.name || appointment.doctor_name || 'Not assigned' }}</td>
               <td><span class="badge" [class]="getStatusClass(appointment.status)">{{ appointment.status }}</span></td>
             </tr>
           </tbody>

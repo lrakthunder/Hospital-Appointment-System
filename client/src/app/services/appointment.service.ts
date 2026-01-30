@@ -12,8 +12,9 @@ export interface Appointment {
   appointment_date: string;
   appointment_time: string;
   department: string;
-  doctor?: string;
-  doctor_name?: string;
+  doctor_id?: number;
+  doctor?: any; // optional relation object returned from API
+  doctor_name?: string; // kept for backward compatibility
   reason?: string;
   status?: string;
   admin_notes?: string;
