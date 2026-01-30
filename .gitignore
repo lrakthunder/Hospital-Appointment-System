@@ -40,6 +40,7 @@ Thumbs.db
 desktop.ini
 
 # Environment files
+.env
 .env.local
 .env.*.local
 

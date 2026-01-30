@@ -5,7 +5,7 @@ echo ====================================
 echo.
 
 echo [1/2] Starting Laravel Backend (Port 8000)...
-start "Laravel Backend" cmd /k "cd /d "%~dp0" && php -S 127.0.0.1:8000 -t public_html"
+start "Laravel Backend" cmd /k "cd /d "%~dp0" && php artisan serve --host=127.0.0.1 --port=8000"
 timeout /t 3 > nul
 
 echo.
