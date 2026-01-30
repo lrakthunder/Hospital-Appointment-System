@@ -56,3 +56,11 @@ coverage/
 build/
 dist/
 tmp/
+
+# Local helper and reports
+client_node_files.txt
+size_report.ps1
+size_report.txt
+
+# Laravel runtime sessions (do not commit session files)
+storage/framework/sessions/
