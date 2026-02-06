@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('appointment_attachments', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('appointment_id');
-            $table->string('file_name');
-            $table->string('file_path');
-            $table->string('file_type');
-            $table->bigInteger('file_size'); // in bytes
-            $table->timestamps();
+        if (! Schema::hasTable('appointment_attachments')) {
+            Schema::create('appointment_attachments', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('appointment_id');
+                $table->string('file_name');
+                $table->string('file_path');
+                $table->string('file_type');
+                $table->bigInteger('file_size'); // in bytes
+                $table->timestamps();
 
-            $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
-        });
+                $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
+            });
+        }
     }
 
     /**

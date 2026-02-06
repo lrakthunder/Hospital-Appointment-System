@@ -8,15 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('feedback', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('appointment_id')->nullable()->constrained()->onDelete('set null');
-            $table->integer('rating')->default(5);
-            $table->text('comment')->nullable();
-            $table->string('department')->nullable();
-            $table->timestamps();
-        });
+        if (! Schema::hasTable('feedback')) {
+            Schema::create('feedback', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('user_id')->constrained()->onDelete('cascade');
+                $table->foreignId('appointment_id')->nullable()->constrained()->onDelete('set null');
+                $table->integer('rating')->default(5);
+                $table->text('comment')->nullable();
+                $table->string('department')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

@@ -14,10 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('appointments', function (Blueprint $table) {
-            $table->unsignedBigInteger('doctor_id')->nullable()->after('patient_phone');
-            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('set null');
-        });
+        if (! Schema::hasColumn('appointments', 'doctor_id')) {
+            Schema::table('appointments', function (Blueprint $table) {
+                $table->unsignedBigInteger('doctor_id')->nullable()->after('patient_phone');
+                $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('set null');
+            });
+        }
 
         // Optional backfill: if `appointments.doctor_name` exactly matches `doctors.name`,
         // uncomment and run `php artisan migrate` to populate `doctor_id` automatically.
@@ -33,9 +35,11 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('appointments', function (Blueprint $table) {
-            $table->dropForeign(['doctor_id']);
-            $table->dropColumn('doctor_id');
-        });
+        if (Schema::hasColumn('appointments', 'doctor_id')) {
+            Schema::table('appointments', function (Blueprint $table) {
+                $table->dropForeign(['doctor_id']);
+                $table->dropColumn('doctor_id');
+            });
+        }
     }
 };
